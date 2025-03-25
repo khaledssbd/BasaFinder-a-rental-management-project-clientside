@@ -6,7 +6,7 @@ const AboutBasaFinder = () => {
   return (
     <section
       className="py-10 my-20 bg-fixed"
-      style={{ backgroundImage: `url('/images/rooms/room-4.jpeg')` }} // image must be in public folder
+      style={{ backgroundImage: `url('/images/rooms/room-4.jpeg')` }} // image must be in public folder and use from public folder.. lest deployment build dont work
     >
       <div className="py-20 px-8 md:px-36 bg-white w-4/5 mx-auto rounded-md">
         <h1 className="text-3xl md:text-5xl mb-8 text-black text-center">

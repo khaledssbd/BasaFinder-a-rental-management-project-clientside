@@ -50,13 +50,13 @@ efficiently.
 
 ## 🌍 Live site:
 
-- [BasaFinder clientside on vercel](https://basafinder-frontend.vercel.app)
-- [BasaFinder serverside on vercel](https://basafinder-backend-khaled.vercel.app)
+- [BasaFinder clientside on vercel](https://basafinder-clientside.vercel.app)
+- [BasaFinder serverside on vercel](https://basafinder-serverside.vercel.app)
 
 ## 🔗 GitHub Repository:
 
-- [Client-Repository](https://github.com/khaledssbd/basafinder-client)
-- [Server-Repository](https://github.com/khaledssbd/basafinder-server)
+- [Client-Repository](https://github.com/khaledssbd/BasaFinder-a-rental-management-project-clientside)
+- [Server-Repository](https://github.com/khaledssbd/BasaFinder-a-rental-management-project-serverside)
 
 ---
 
@@ -100,11 +100,11 @@ Before you begin, ensure you have the following installed on your local machine:
 ### 🛠️ Installation
 
 1. ```bash
-   git clone https://github.com/khaledssbd/BasaFinder-client
+   git clone https://github.com/khaledssbd/BasaFinder-a-rental-management-project-clientside
    ```
 
 2. ```bash
-   cd BasaFinder-client
+   cd BasaFinder-a-rental-management-project-clientside
    ```
 
 3. ```bash

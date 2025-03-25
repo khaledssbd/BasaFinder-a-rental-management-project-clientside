@@ -10,7 +10,7 @@
       rgba(21, 11, 43, 0.8) 0%,
       rgba(21, 11, 43, 0.4) 100%
     ),
-    /*  image must be in public folder */
+    /*  image must be in public folder and use from public folder.. lest deployment build dont work */
     url('/images/rooms/room-6.jpg')
       lightgray 0px -18.896px / 100% 123.31% no-repeat;
 
