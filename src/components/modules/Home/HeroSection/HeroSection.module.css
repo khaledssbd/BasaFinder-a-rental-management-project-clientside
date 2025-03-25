@@ -1,0 +1,18 @@
+.banner {
+  /* background: url('@/assets/images/rooms/room-6.jpg');
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  border-radius: 24px;
+  background: linear-gradient(
+      0deg,
+      rgba(21, 11, 43, 0.8) 0%,
+      rgba(21, 11, 43, 0.4) 100%
+    ),
+    url('@/assets/images/rooms/room-6.jpg') lightgray 0px -18.896px / 100% 123.31%
+      no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: auto;
+}
