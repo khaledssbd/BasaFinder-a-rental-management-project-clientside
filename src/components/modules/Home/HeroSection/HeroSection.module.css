@@ -10,7 +10,7 @@
       rgba(21, 11, 43, 0.8) 0%,
       rgba(21, 11, 43, 0.4) 100%
     ),
-    url('@/assets/images/rooms/room-6.jpg') lightgray 0px -18.896px / 100% 123.31%
+    url('/images/rooms/room-6.jpeg') lightgray 0px -18.896px / 100% 123.31%
       no-repeat;
   background-size: cover;
   background-position: center;
