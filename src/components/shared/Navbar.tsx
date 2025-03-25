@@ -46,7 +46,7 @@ const Navbar = () => {
 
     {
       name: 'Dashboard',
-      link: `/${user?.role}/dashboard`,
+      link: user ? `/${user?.role}/dashboard` : '/login',
     },
 
     {
