@@ -8,8 +8,8 @@ const ValidationPage = async ({
 }: {
   searchParams: SearchParams;
 }) => {
-  const query = await searchParams;
-  const res = await validatePayment(query.tran_id as string);
+  const { tran_id } = await searchParams;
+  const res = await validatePayment(tran_id as string);
 
   return (
     <>

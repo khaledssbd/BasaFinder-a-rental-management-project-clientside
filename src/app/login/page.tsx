@@ -1,9 +1,13 @@
 import LoginForm from '@/components/modules/Auth/Login/LoginForm';
 
-const LoginPage = () => {
+type SearchParams = Promise<{ [key: string]: string | undefined }>;
+
+const LoginPage = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const { redirectPath } = await searchParams;
+
   return (
     <div className="min-h-screen w-screen flex justify-center items-center">
-      <LoginForm />
+      <LoginForm redirectPath={redirectPath} />
     </div>
   );
 };

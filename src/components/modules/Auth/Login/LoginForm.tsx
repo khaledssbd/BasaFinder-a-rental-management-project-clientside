@@ -1,4 +1,5 @@
 'use client';
+
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,7 +11,7 @@ import { loginUser, reCaptchaTokenVerification } from '@/services/Auth';
 import { toast } from 'sonner';
 import { loginSchema } from './loginValidation';
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
 import { Eye, EyeOff, LoaderPinwheel } from 'lucide-react';
 
@@ -24,7 +25,7 @@ import {
 } from '@/components/ui/form';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
-export default function LoginForm() {
+export default function LoginForm({ redirectPath }: { redirectPath: string  | undefined }) {
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -38,8 +39,9 @@ export default function LoginForm() {
 
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
 
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirectPath') || '/';
+  // const searchParams = useSearchParams();
+  // const redirectPath = searchParams.get('redirectPath');
+
   const router = useRouter();
 
   const handleReCaptcha = async (value: string | null) => {
@@ -59,7 +61,7 @@ export default function LoginForm() {
       if (res?.success) {
         setIsLoading(true);
         toast.success(res?.message);
-        router.push(redirect);
+        router.push(redirectPath || '/');
       } else {
         toast.error(res?.message);
       }
@@ -71,8 +73,8 @@ export default function LoginForm() {
   return (
     <div className="sm:border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
       <div className="flex items-center space-x-4 ">
-        <Link href='/'>
-        <Logo />
+        <Link href="/">
+          <Logo />
         </Link>
         <div>
           <h1 className="text-xl font-semibold">Login</h1>
@@ -156,7 +158,7 @@ export default function LoginForm() {
       </Form>
 
       {/* ForgotPasswordModal */}
-      <div className='my-3'>
+      <div className="my-3">
         <ForgotPasswordModal />
       </div>
 
