@@ -1,3 +1,5 @@
+'use client';
+
 import RentalAgreementModal from '../RentalCard/RentalAgreementModal';
 import RentalDetailsCarousel from './RentalDetailsCarousel';
 import { IRental } from '@/types';
@@ -8,8 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import RentalActionSkeleton from '../RentalCard/RentalActionSkeleton';
+import { useUser } from '@/context/UserContext';
 
 const RentalDetails = ({ rental }: { rental: IRental }) => {
+  const { user, isLoading } = useUser();
   return (
     <Card className="md:mx-20 my-10 md:my-24 pb-10">
       {/* CardHeader */}
@@ -52,10 +57,16 @@ const RentalDetails = ({ rental }: { rental: IRental }) => {
 
       {/* CardFooter */}
       <CardFooter className="block p-0">
-        <div className="text-center">
-          {/* Rental Agree Modal */}
-          {!rental?.isRented && <RentalAgreementModal rental={rental} />}
-        </div>
+        {isLoading ? (
+          <RentalActionSkeleton />
+        ) : (
+          <div className="text-center">
+            {/* Rental Agree Modal */}
+            {!rental?.isRented && (
+              <RentalAgreementModal rental={rental} user={user} />
+            )}
+          </div>
+        )}
       </CardFooter>
     </Card>
   );
