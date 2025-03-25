@@ -1,15 +1,15 @@
 import PaymentAfter from '@/components/modules/PaymentAfter';
 import { validatePayment } from '@/services/Payment';
 
-type SearchParams = { [key: string]: string | string[] | undefined };
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 const ValidationPage = async ({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) => {
-  const { tran_id } = await searchParams;
-  const res = await validatePayment(tran_id as string);
+  const query = await searchParams;
+  const res = await validatePayment(query.tran_id as string);
 
   return (
     <>
