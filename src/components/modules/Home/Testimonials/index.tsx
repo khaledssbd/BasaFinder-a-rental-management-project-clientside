@@ -132,8 +132,8 @@ export default function Testimonials() {
                       key={i}
                       className={`h-5 w-5 ${
                         i < Math.round(testimonial.rating)
-                          ? 'fill-yellow-500 text-transparent'
-                          : 'fill-gray-300'
+                          ? 'bg-primary p-1 mx-1 rounded-sm fill-white text-transparent'
+                          : 'bg-gray-400 p-1 mx-1 rounded-sm fill-white text-transparent'
                       }`}
                     />
                   ))}

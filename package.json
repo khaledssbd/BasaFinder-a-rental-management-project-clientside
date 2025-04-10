@@ -1,5 +1,28 @@
 {
   "name": "basa_finder",
+  "author": {
+    "name": "Khaled Siddique",
+    "email": "khaled@example.com",
+    "url": "https://khaled-siddique.vercel.app"
+  },
+  "description": "A fast and lightweight rental management platform built with MongoDB, NodeJS, ExpressJS and NextJS.",
+  "keywords": [
+    "rental",
+    "nextjs",
+    "typescript",
+    "mongoose",
+    "nodejs",
+    "expressjs",
+    "mongodb"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khaledssbd/BasaFinder-a-rental-management-project-clientside.git"
+  },
+  "bugs": {
+    "url": "https://github.com/khaledssbd/BasaFinder-a-rental-management-project-clientside/issues"
+  },
+  "homepage": "https://github.com/khaledssbd/BasaFinder-a-rental-management-project-clientside#readme",
   "version": "0.1.0",
   "private": true,
   "scripts": {

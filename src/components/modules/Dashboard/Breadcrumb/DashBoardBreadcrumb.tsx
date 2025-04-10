@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Breadcrumb,
   BreadcrumbEllipsis,
@@ -13,8 +15,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { usePathname } from 'next/navigation';
 
 const DashBoardBreadcrumb = () => {
+  // const currentPage = usePathname().split('/').pop();
+  const currentPage = usePathname()
+    .split('/')
+    .filter(Boolean)
+    .slice(-3)
+    .map(page => page.replace('-', ' '));
+
+  // console.log({ currentPage });
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -29,20 +41,38 @@ const DashBoardBreadcrumb = () => {
               <span className="sr-only">Toggle menu</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuItem>Documentation</DropdownMenuItem>
-              <DropdownMenuItem>Themes</DropdownMenuItem>
-              <DropdownMenuItem>GitHub</DropdownMenuItem>
+              <DropdownMenuItem>
+                <BreadcrumbLink href="/rentals">Rentals</BreadcrumbLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <BreadcrumbLink href="/about-us">About us</BreadcrumbLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <BreadcrumbLink href="/terms-and-conditions">
+                  Terms & Conditions
+                </BreadcrumbLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <BreadcrumbLink href="/privacy-policy">
+                  Privacy Policy
+                </BreadcrumbLink>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
+        {/* <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-        </BreadcrumbItem>
+          <BreadcrumbPage>Dashboard</BreadcrumbPage>
+        </BreadcrumbItem> */}
+
+        {currentPage.map((page, index) => (
+          <span key={index} className="flex justify-center items-center">
+            <BreadcrumbSeparator />
+            <BreadcrumbPage>
+              <span className="capitalize">{page}</span>
+            </BreadcrumbPage>
+          </span>
+        ))}
       </BreadcrumbList>
     </Breadcrumb>
   );

@@ -1,3 +1,5 @@
+import { TUser } from "./user";
+
 export interface IRental {
   _id: string;
   location: string;
@@ -8,7 +10,7 @@ export interface IRental {
   // balcony: number;
   // area: number;
   images: string[];
-  landlord: string;
+  landlord: TUser;
   isRented: boolean;
   isDeleted: boolean;
   createdAt?: Date;

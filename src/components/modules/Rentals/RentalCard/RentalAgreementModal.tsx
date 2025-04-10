@@ -100,7 +100,7 @@ const RentalAgreementModal = ({
           Agree to book
         </Button>
       ) : (
-        user.role === 'tenant' && (
+        user.email !== rental.landlord.email && (
           <Dialog>
             <DialogTrigger asChild>
               <Button
@@ -178,7 +178,10 @@ const RentalAgreementModal = ({
                               onSelect={date =>
                                 field.onChange(date?.getTime() || null)
                               } // Convert to timestamp
-                              disabled={date => date < new Date()} // stop selecting old date
+                              disabled={date => date < new Date()} // disabling old dates
+                              // disabled={date =>
+                              // date > new Date() || date < new Date('1900-01-01') disabling future dates and dates before '1900-01-01'
+                              // }
                               initialFocus
                             />
                           </PopoverContent>

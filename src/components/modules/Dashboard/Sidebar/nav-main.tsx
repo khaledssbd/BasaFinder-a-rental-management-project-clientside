@@ -18,6 +18,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { usePathname } from 'next/navigation';
 
 export function NavMain({
   items,
@@ -33,6 +34,8 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const pathname = usePathname();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
@@ -41,7 +44,14 @@ export function NavMain({
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title}>
-                <Link href={item.url}>
+                <Link
+                  href={item.url}
+                  className={`${
+                    pathname && pathname === item.url
+                      ? 'bg-gray-300 hover:bg-gray-300'
+                      : 'hover:bg-gray-300'
+                  }`}
+                >
                   <item.icon />
                   <span>{item.title}</span>
                 </Link>
@@ -59,7 +69,14 @@ export function NavMain({
                       {item.items?.map(subItem => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
-                            <Link href={subItem.url}>
+                            <Link
+                              href={subItem.url}
+                              className={`${
+                                pathname && pathname === subItem.url
+                                  ? 'bg-gray-300 hover:bg-gray-300'
+                                  : 'hover:bg-gray-300'
+                              }`}
+                            >
                               <span>{subItem.title}</span>
                             </Link>
                           </SidebarMenuSubButton>

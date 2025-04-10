@@ -4,9 +4,9 @@ import { BFTable } from '@/components/ui/core/BFTable/index';
 import { useRouter } from 'next/navigation';
 import Pagination from '@/components/ui/core/Pagination';
 // import { Checkbox } from '@/components/ui/checkbox';
-import { Edit, Eye, Plus, Trash } from 'lucide-react';
+import { Edit, Eye, Trash } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
-import { Button } from '@/components/ui/button';
+
 import { IMeta, IRental } from '@/types';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -154,16 +154,8 @@ const ManageAdminRentals = ({
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="text-center">
         <h1 className="text-xl font-bold">Manage Rentals ({meta.total})</h1>
-        <div className="flex items-center gap-2">
-          <Button
-            onClick={() => router.push('/landlord/rentals/add-rental')}
-            size="sm"
-          >
-            Add Rentals <Plus />
-          </Button>
-        </div>
       </div>
       <BFTable columns={columns} data={rentals || []} />
       <Pagination page={Number(page)} totalPage={meta?.totalPage} />

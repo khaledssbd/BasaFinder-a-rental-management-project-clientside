@@ -3,7 +3,7 @@ const Tips = () => {
     <section className="py-14 px-5 bg-gray-100">
       <div className="text-center">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 md:mb-6 text-gray-900">
-          Tips for Finding the Perfect Rental
+          Tips to Find the Perfect Rental
         </h2>
         <div className="grid md:grid-cols-2 gap-12">
           <div className="bg-white p-6 rounded-lg shadow-md">
