@@ -1,6 +1,5 @@
 import CommonManagePayments from '@/components/modules/Payments/CommonManagePayments';
 import { getAllPayments } from '@/services/Payment';
-import React from 'react';
 
 const AdminPaymentsPage = async ({
   searchParams,

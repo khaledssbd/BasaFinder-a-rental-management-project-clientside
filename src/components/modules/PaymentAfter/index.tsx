@@ -3,7 +3,6 @@
 import { ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import React from 'react';
 // import { toast } from 'sonner';
 
 type TResponse = {

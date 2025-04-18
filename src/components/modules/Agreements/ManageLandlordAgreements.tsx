@@ -115,7 +115,7 @@ const ManageLandlordAgreements = ({
             className="w-8 h-8 rounded-full"
           />
           <span className="truncate">
-            {row.original.rental.location.slice(0, 10)}
+            {row.original.rental.location.slice(0, 10)}...
           </span>
         </div>
       ),

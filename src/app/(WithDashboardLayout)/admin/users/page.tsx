@@ -1,6 +1,5 @@
 import AdminManageUsers from '@/components/modules/Users/AdminManageUsers';
 import { getAllUsers } from '@/services/User';
-import React from 'react';
 
 const AdminManangeUsersPage = async ({
   searchParams,

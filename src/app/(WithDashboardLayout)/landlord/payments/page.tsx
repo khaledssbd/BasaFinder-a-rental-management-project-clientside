@@ -1,6 +1,5 @@
 import CommonManagePayments from '@/components/modules/Payments/CommonManagePayments';
 import { getLandlordPayments } from '@/services/Payment';
-import React from 'react';
 
 const LandlordPaymentsPage = async ({
   searchParams,

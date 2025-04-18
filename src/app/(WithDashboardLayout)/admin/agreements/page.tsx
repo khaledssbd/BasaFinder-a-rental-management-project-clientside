@@ -1,6 +1,5 @@
 import ManageAdminAgreements from '@/components/modules/Agreements/ManageAdminAgreements';
 import { getAdminAgreements } from '@/services/Agreement';
-import React from 'react';
 
 const LandlordAgreementsPage = async ({
   searchParams,
