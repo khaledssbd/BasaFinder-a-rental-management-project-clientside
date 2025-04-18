@@ -203,7 +203,7 @@ const ManageAdminAgreements = ({
             title="Edit this Rental"
             onClick={() =>
               router.push(
-                `/landlord/rentals/update-rental/${row.original.rental._id}`
+                `/admin/rentals/update-rental/${row.original.rental._id}`
               )
             }
           >
