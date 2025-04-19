@@ -35,7 +35,7 @@ const ProductCarouselNew = () => {
   return (
     <div className="mx-auto">
       <div className="flex justify-between mb-8">
-        {rentals?.slice(0, 5).map((rental: IRental, index: number) => (
+        {rentals?.map((rental: IRental, index: number) => (
           <div
             key={index}
             className={`relative flex-1 mx-1 transition-all duration-300 rounded-lg overflow-hidden bg-gray-100 ${
@@ -68,7 +68,9 @@ const ProductCarouselNew = () => {
         <h2 className="text-2xl mb-3">{activeProduct?.location}</h2>
 
         <p className="text-base text-gray-600 max-w-xl mx-auto mb-5">
-          {activeProduct?.description}
+          {activeProduct?.description.length > 90
+            ? `${activeProduct?.description?.slice(0, 90)}...`
+            : activeProduct?.description}
         </p>
 
         <div className="mt-auto">
