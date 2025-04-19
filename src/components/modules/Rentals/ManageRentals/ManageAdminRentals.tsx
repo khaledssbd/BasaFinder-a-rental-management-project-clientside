@@ -8,21 +8,13 @@ import { Edit, Eye, Trash } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 
 import { IMeta, IRental } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import DeleteConfirmationModal from '@/components/ui/core/BFModal/DeleteConfirmationModal';
 import { toast } from 'sonner';
-import { deleteRental } from '@/services/Rental';
+import { deleteRental, getAllRentals } from '@/services/Rental';
 
-const ManageAdminRentals = ({
-  rentals,
-  meta,
-  page,
-}: {
-  rentals: IRental[];
-  meta: IMeta;
-  page: string;
-}) => {
+const ManageAdminRentals = ({ page }: { page: string }) => {
   const router = useRouter();
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
@@ -30,6 +22,22 @@ const ManageAdminRentals = ({
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [rentals, setRentals] = useState<IRental[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, meta } = await getAllRentals(page, '12');
+        setRentals(data);
+        setMeta(meta);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [page]);
 
   const handleDeleteRental = (rental: IRental) => {
     setSelectedId(rental?._id);
@@ -155,10 +163,10 @@ const ManageAdminRentals = ({
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-xl font-bold">Manage Rentals ({meta.total})</h1>
+        <h1 className="text-xl font-bold">Manage Rentals ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={rentals || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
 
       <DeleteConfirmationModal
         name={selectedItem}

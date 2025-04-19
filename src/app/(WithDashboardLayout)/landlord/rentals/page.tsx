@@ -1,5 +1,4 @@
 import ManageLandlordRentals from '@/components/modules/Rentals/ManageRentals/ManageLandlordRentals';
-import { getMyRentals } from '@/services/Rental';
 
 const LandlordManageRentalsPage = async ({
   searchParams,
@@ -8,11 +7,9 @@ const LandlordManageRentalsPage = async ({
 }) => {
   const { page } = await searchParams;
 
-  const { data, meta } = await getMyRentals(page, '12');
-
   return (
     <div>
-      <ManageLandlordRentals rentals={data} meta={meta} page={page} />
+      <ManageLandlordRentals page={page} />
     </div>
   );
 };

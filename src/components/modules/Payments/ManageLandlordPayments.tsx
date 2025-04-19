@@ -6,24 +6,26 @@ import Pagination from '@/components/ui/core/Pagination';
 // import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { Eye } from 'lucide-react';
-import { IMeta, TAgreement } from '@/types';
+import { IMeta, TPayments } from '@/types';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { CreatePaymentDialog } from '../Payments/CreatePaymentDialog';
-import moment from 'moment';
+import { getLandlordPayments, validatePayment } from '@/services/Payment';
+import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
-import { getTenantAgreements } from '@/services/Agreement';
 
-const ManageTenantAgreements = ({ page }: { page: string }) => {
+const ManageLandlordPayments = ({ page }: { page: string }) => {
   const router = useRouter();
-  const [agrements, setAgrements] = useState<TAgreement[]>([]);
+  // const searchParams = useSearchParams();
+  // const page = searchParams.get('page');
+  // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
+  const [payments, setPayments] = useState<TPayments[]>([]);
   const [meta, setMeta] = useState<IMeta | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data, meta } = await getTenantAgreements(page, '10');
-        setAgrements(data);
+        const { data, meta } = await getLandlordPayments(page, '10');
+        setPayments(data);
         setMeta(meta);
       } catch (err) {
         console.error(err);
@@ -32,11 +34,22 @@ const ManageTenantAgreements = ({ page }: { page: string }) => {
 
     fetchData();
   }, [page]);
-  // const searchParams = useSearchParams();
-  // const page = searchParams.get('page');
-  // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
 
-  const columns: ColumnDef<TAgreement>[] = [
+  const handleVerifyPayment = async (tran_id: string) => {
+    try {
+      const res = await validatePayment(tran_id);
+
+      if (res?.success) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  const columns: ColumnDef<TPayments>[] = [
     // {
     //   id: 'select',
     //   header: ({ table }) => (
@@ -80,7 +93,7 @@ const ManageTenantAgreements = ({ page }: { page: string }) => {
             className="w-8 h-8 rounded-full"
           />
           <span className="truncate">
-            {row.original.rental.location.slice(0, 10)}
+            {row.original.rental.location.slice(0, 20)}
           </span>
         </div>
       ),
@@ -90,48 +103,37 @@ const ManageTenantAgreements = ({ page }: { page: string }) => {
       header: 'Rent',
       cell: ({ row }) => <span>{row.original.rental.rent}</span>,
     },
-    {
-      accessorKey: 'bedrooms',
-      header: 'Bedrooms',
-      cell: ({ row }) => <span>{row.original.rental.bedrooms}</span>,
-    },
-    {
-      accessorKey: 'moveInDate',
-      header: 'Move-In-Date',
-      cell: ({ row }) => (
-        <span>
-          {moment(new Date(row.original.moveInDate)).format('DD-MMMM-YY')}
-        </span>
-      ),
-    },
-    {
-      accessorKey: 'durationMonth',
-      header: 'Duration Month',
-      cell: ({ row }) => <span>{row.original.durationMonth}</span>,
-    },
+    // {
+    //   accessorKey: 'bedrooms',
+    //   header: 'Bedrooms',
+    //   cell: ({ row }) => <span>{row.original.rental.bedrooms}</span>,
+    // },
     {
       accessorKey: 'status',
       header: 'Status',
       cell: ({ row }) => (
-        <div className="flex flex-col justify-center items-start gap-2 w-28">
-          <span className="capitalize">{row.original.status}</span>
-          {row.original.landlordContactNo && (
-            <span className="text-green-500 font-bold">
-              ({row.original.landlordContactNo})
-            </span>
-          )}
+        <div className="flex flex-col justify-center items-center gap-2 w-fit">
+          <span className="w-full mx-auto text-center">
+            {row.original.status}
+          </span>
+          {row.original.status !== 'Paid' &&
+            row.original.status !== 'Failed' && (
+              <button
+                className="text-sm font-medium p-2 w-fit text-black bg-green-500 rounded-md hover:bg-red-500 hover:text-white"
+                title="Verify this payment"
+                onClick={() => handleVerifyPayment(row.original.transactionId)}
+              >
+                Verify
+              </button>
+            )}
         </div>
       ),
     },
     {
-      accessorKey: 'payment',
-      header: 'Payment',
+      accessorKey: 'amount',
+      header: 'Amount',
       cell: ({ row }) => (
-        <>
-          {row.original.status === 'approved' && (
-            <CreatePaymentDialog agreement={row.original} />
-          )}
-        </>
+        <span className="capitalize">{row.original.amount}</span>
       ),
     },
     {
@@ -141,7 +143,7 @@ const ManageTenantAgreements = ({ page }: { page: string }) => {
         <div className="flex items-center space-x-4">
           <button
             className="text-gray-500 hover:text-blue-500"
-            title="View this Rental"
+            title="View the rental"
             onClick={() => router.push(`/rentals/${row.original.rental._id}`)}
           >
             <Eye className="w-5 h-5" />
@@ -154,12 +156,12 @@ const ManageTenantAgreements = ({ page }: { page: string }) => {
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-xl font-bold">Manage Agreements ({meta?.total})</h1>
+        <h1 className="text-xl font-bold">Manage Payments ({meta?.total})</h1>
       </div>
-      <BFTable columns={columns} data={agrements || []} />
+      <BFTable columns={columns} data={payments || []} />
       <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
     </div>
   );
 };
 
-export default ManageTenantAgreements;
+export default ManageLandlordPayments;

@@ -9,20 +9,45 @@ import { Eye } from 'lucide-react';
 import { IMeta, TPayments } from '@/types';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { getTenantPayments, validatePayment } from '@/services/Payment';
+import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
 
-const ManageTenantPayments = ({
-  payments,
-  meta,
-  page,
-}: {
-  payments: TPayments[];
-  meta: IMeta;
-  page: string;
-}) => {
+const ManageTenantPayments = ({ page }: { page: string }) => {
   const router = useRouter();
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
   // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
+  const [payments, setPayments] = useState<TPayments[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, meta } = await getTenantPayments(page, '10');
+        setPayments(data);
+        setMeta(meta);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [page]);
+
+  const handleVerifyPayment = async (tran_id: string) => {
+    try {
+      const res = await validatePayment(tran_id);
+
+      if (res?.success) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
 
   const columns: ColumnDef<TPayments>[] = [
     // {
@@ -87,7 +112,21 @@ const ManageTenantPayments = ({
       accessorKey: 'status',
       header: 'Status',
       cell: ({ row }) => (
-        <span className="capitalize">{row.original.status}</span>
+        <div className="flex flex-col justify-center items-center gap-2 w-fit">
+          <span className="w-full mx-auto text-center">
+            {row.original.status}
+          </span>
+          {row.original.status !== 'Paid' &&
+            row.original.status !== 'Failed' && (
+              <button
+                className="text-sm font-medium p-2 w-fit text-black bg-green-500 rounded-md hover:bg-red-500 hover:text-white"
+                title="Verify this payment"
+                onClick={() => handleVerifyPayment(row.original.transactionId)}
+              >
+                Verify
+              </button>
+            )}
+        </div>
       ),
     },
     {
@@ -117,10 +156,10 @@ const ManageTenantPayments = ({
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-xl font-bold">Manage Payments ({meta.total})</h1>
+        <h1 className="text-xl font-bold">Manage Payments ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={payments || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
     </div>
   );
 };

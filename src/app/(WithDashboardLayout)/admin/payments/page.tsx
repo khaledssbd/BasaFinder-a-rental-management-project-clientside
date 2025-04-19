@@ -1,5 +1,4 @@
-import CommonManagePayments from '@/components/modules/Payments/CommonManagePayments';
-import { getAllPayments } from '@/services/Payment';
+import ManageAdminPayments from '@/components/modules/Payments/ManageAdminPayments';
 
 const AdminPaymentsPage = async ({
   searchParams,
@@ -8,11 +7,9 @@ const AdminPaymentsPage = async ({
 }) => {
   const { page } = await searchParams;
 
-  const { data, meta } = await getAllPayments(page, '10');
-
   return (
     <div>
-      <CommonManagePayments payments={data} meta={meta} page={page} />
+      <ManageAdminPayments page={page} />
     </div>
   );
 };

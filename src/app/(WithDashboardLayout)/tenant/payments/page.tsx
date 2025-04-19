@@ -1,6 +1,4 @@
-import CommonManagePayments from '@/components/modules/Payments/CommonManagePayments';
-// import ManageTenantPayments from '@/components/modules/Payments/ManageTenantPayments';
-import { getTenantPayments } from '@/services/Payment';
+import ManageTenantPayments from '@/components/modules/Payments/ManageTenantPayments';
 
 const TenantPaymentsPage = async ({
   searchParams,
@@ -9,12 +7,9 @@ const TenantPaymentsPage = async ({
 }) => {
   const { page } = await searchParams;
 
-  const { data, meta } = await getTenantPayments(page, '10');
-
   return (
     <div>
-      {/* <ManageTenantPayments payments={data} meta={meta} page={page} /> */}
-      <CommonManagePayments payments={data} meta={meta} page={page} />
+      <ManageTenantPayments page={page} />
     </div>
   );
 };

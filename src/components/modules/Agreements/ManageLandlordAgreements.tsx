@@ -1,7 +1,11 @@
 'use client';
 
 import DeleteConfirmationModal from '@/components/ui/core/BFModal/DeleteConfirmationModal';
-import { deleteAgreement, updateAgreementStatus } from '@/services/Agreement';
+import {
+  deleteAgreement,
+  getLandlordAgreements,
+  updateAgreementStatus,
+} from '@/services/Agreement';
 import { BFTable } from '@/components/ui/core/BFTable/index';
 import Pagination from '@/components/ui/core/Pagination';
 // import { Checkbox } from '@/components/ui/checkbox';
@@ -10,21 +14,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Edit, Eye, Trash } from 'lucide-react';
 import { IMeta, TAgreement } from '@/types';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import LandlordContactAddModal from './LandlordContactAddModal';
 import moment from 'moment';
 
-const ManageLandlordAgreements = ({
-  agrements,
-  meta,
-  page,
-}: {
-  agrements: TAgreement[];
-  meta: IMeta;
-  page: string;
-}) => {
+const ManageLandlordAgreements = ({ page }: { page: string }) => {
   const router = useRouter();
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
@@ -32,7 +28,22 @@ const ManageLandlordAgreements = ({
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [agrements, setAgrements] = useState<TAgreement[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, meta } = await getLandlordAgreements(page, '10');
+        setAgrements(data);
+        setMeta(meta);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [page]);
   const handleOrderStatusChange = async (
     status: string,
     agreementId: string
@@ -223,10 +234,10 @@ const ManageLandlordAgreements = ({
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-xl font-bold">Manage Agreements ({meta.total})</h1>
+        <h1 className="text-xl font-bold">Manage Agreements ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={agrements || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
 
       <DeleteConfirmationModal
         name={selectedItem}

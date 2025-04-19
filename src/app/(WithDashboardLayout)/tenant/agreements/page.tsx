@@ -1,5 +1,4 @@
 import ManageTenantAgreements from '@/components/modules/Agreements/ManageTenantAgreements';
-import { getTenantAgreements } from '@/services/Agreement';
 
 const TenantAgreementsPage = async ({
   searchParams,
@@ -8,11 +7,9 @@ const TenantAgreementsPage = async ({
 }) => {
   const { page } = await searchParams;
 
-  const { data, meta } = await getTenantAgreements(page, '10');
-
   return (
     <div>
-      <ManageTenantAgreements agrements={data} meta={meta} page={page} />
+      <ManageTenantAgreements page={page} />
     </div>
   );
 };

@@ -25,8 +25,6 @@ const DashBoardBreadcrumb = () => {
     .slice(-3)
     .map(page => page.replace('-', ' '));
 
-  // console.log({ currentPage });
-
   return (
     <Breadcrumb>
       <BreadcrumbList>

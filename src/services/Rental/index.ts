@@ -117,8 +117,6 @@ export const updateRental = async (
 ): Promise<any> => {
   const token = await getValidToken();
 
-  console.log({ token });
-
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/rentals/update/${rentalId}`,

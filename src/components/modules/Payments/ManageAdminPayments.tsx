@@ -9,22 +9,31 @@ import { Eye } from 'lucide-react';
 import { IMeta, TPayments } from '@/types';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { validatePayment } from '@/services/Payment';
+import { getAllPayments, validatePayment } from '@/services/Payment';
 import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
 
-const CommonManagePayments = ({
-  payments,
-  meta,
-  page,
-}: {
-  payments: TPayments[];
-  meta: IMeta;
-  page: string;
-}) => {
+const ManageAdminPayments = ({ page }: { page: string }) => {
   const router = useRouter();
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
   // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
+  const [payments, setPayments] = useState<TPayments[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, meta } = await getAllPayments(page, '10');
+        setPayments(data);
+        setMeta(meta);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [page]);
 
   const handleVerifyPayment = async (tran_id: string) => {
     try {
@@ -147,12 +156,12 @@ const CommonManagePayments = ({
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-xl font-bold">Manage Payments ({meta.total})</h1>
+        <h1 className="text-xl font-bold">Manage Payments ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={payments || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
     </div>
   );
 };
 
-export default CommonManagePayments;
+export default ManageAdminPayments;

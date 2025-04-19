@@ -8,21 +8,13 @@ import { Edit, Eye, Plus, Trash } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { IMeta, IRental } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import DeleteConfirmationModal from '@/components/ui/core/BFModal/DeleteConfirmationModal';
 import { toast } from 'sonner';
-import { deleteRental } from '@/services/Rental';
+import { deleteRental, getMyRentals } from '@/services/Rental';
 
-const ManageLandlordRentals = ({
-  rentals,
-  meta,
-  page,
-}: {
-  rentals: IRental[];
-  meta: IMeta;
-  page: string;
-}) => {
+const ManageLandlordRentals = ({ page }: { page: string }) => {
   const router = useRouter();
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
@@ -30,6 +22,23 @@ const ManageLandlordRentals = ({
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
+  const [rentals, setRentals] = useState<IRental[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, meta } = await getMyRentals(page, '12');
+        setRentals(data);
+        setMeta(meta);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [page]);
 
   const handleDeleteRental = (rental: IRental) => {
     setSelectedId(rental?._id);
@@ -155,7 +164,7 @@ const ManageLandlordRentals = ({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold">Manage Rentals ({meta.total})</h1>
+        <h1 className="text-xl font-bold">Manage Rentals ({meta?.total})</h1>
         <div className="flex items-center gap-2">
           <Button
             onClick={() => router.push('/landlord/rentals/add-rental')}
@@ -166,7 +175,7 @@ const ManageLandlordRentals = ({
         </div>
       </div>
       <BFTable columns={columns} data={rentals || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
 
       <DeleteConfirmationModal
         name={selectedItem}

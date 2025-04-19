@@ -19,17 +19,27 @@ import Image from 'next/image';
 // import { toast } from 'sonner';
 // import LandlordContactAddModal from './LandlordContactAddModal';
 import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { getAdminAgreements } from '@/services/Agreement';
 
-const ManageAdminAgreements = ({
-  agrements,
-  meta,
-  page,
-}: {
-  agrements: TAgreement[];
-  meta: IMeta;
-  page: string;
-}) => {
+const ManageAdminAgreements = ({ page }: { page: string }) => {
   const router = useRouter();
+  const [agrements, setAgrements] = useState<TAgreement[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, meta } = await getAdminAgreements(page, '10');
+        setAgrements(data);
+        setMeta(meta);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [page]);
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
   // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
@@ -225,10 +235,10 @@ const ManageAdminAgreements = ({
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-xl font-bold">Manage Agreements ({meta.total})</h1>
+        <h1 className="text-xl font-bold">Manage Agreements ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={agrements || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
 
       {/* <DeleteConfirmationModal
         name={selectedItem}

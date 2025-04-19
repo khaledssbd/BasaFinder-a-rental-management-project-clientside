@@ -7,21 +7,13 @@ import Pagination from '@/components/ui/core/Pagination';
 // import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { IMeta, TUser } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import moment from 'moment';
-import { changeUserRole, changeUserStatus } from '@/services/User';
+import { changeUserRole, changeUserStatus, getAllUsers } from '@/services/User';
 
-const AdminManageUsers = ({
-  users,
-  meta,
-  page,
-}: {
-  users: TUser[];
-  meta: IMeta;
-  page: string;
-}) => {
+const AdminManageUsers = ({ page }: { page: string }) => {
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
   // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
@@ -31,6 +23,23 @@ const AdminManageUsers = ({
     userId: string;
   } | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [users, setUsers] = useState<TUser[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, meta } = await getAllUsers(page, '10');
+        setUsers(data);
+        setMeta(meta);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [page]);
+
   const handleuUerRoleChange = async (role: string, userId: string) => {
     try {
       const res = await changeUserRole({ role, userId });
@@ -179,10 +188,10 @@ const AdminManageUsers = ({
   return (
     <div>
       <div className="text-center">
-        <h1 className="text-xl font-bold">Manage Users ({meta.total})</h1>
+        <h1 className="text-xl font-bold">Manage Users ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={users || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
 
       <DeleteConfirmationModal
         name={selectedItem}
