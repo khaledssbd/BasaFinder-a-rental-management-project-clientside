@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { getAllRentals } from '@/services/Rental';
 import { IRental } from '@/types';
 import Image from 'next/image';
@@ -56,8 +56,8 @@ import React, { useState, useEffect } from 'react';
 // ];
 
 // Define the component as a functional component with TypeScript
-const ProductCarousel = () => {
-  const [rentals, setRentals] = useState<any[]>([]);
+const ProductCarouselNew = () => {
+  const [rentals, setRentals] = useState<IRental[]>([]);
   const [activeIndex, setActiveIndex] = useState<number>(rentals.length - 1);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const ProductCarousel = () => {
   const activeProduct: IRental = rentals[activeIndex];
 
   return (
-    <div className="p-5 max-w-5xl mx-auto">
+    <div className="mx-auto">
       <div className="flex justify-between mb-8">
         {rentals?.slice(0, 5).map((rental: IRental, index: number) => (
           <div
@@ -125,4 +125,4 @@ const ProductCarousel = () => {
   );
 };
 
-export default ProductCarousel;
+export default ProductCarouselNew;

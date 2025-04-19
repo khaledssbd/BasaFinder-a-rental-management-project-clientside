@@ -2,7 +2,7 @@
 
 import { Typewriter } from 'react-simple-typewriter';
 
-const AboutBasaFinder = () => {
+const BasaFinderParallax = () => {
   return (
     <section
       className="py-10 my-20 bg-fixed"
@@ -33,4 +33,4 @@ const AboutBasaFinder = () => {
   );
 };
 
-export default AboutBasaFinder;
+export default BasaFinderParallax;
