@@ -82,8 +82,8 @@ export const getSingleRental = async (rentalId: string): Promise<any> => {
   }
 };
 
-// get my Rentals
-export const getMyRentals = async (
+// get Landlord Rentals
+export const getLandlordRentals = async (
   page?: string,
   limit?: string
 ): Promise<any> => {

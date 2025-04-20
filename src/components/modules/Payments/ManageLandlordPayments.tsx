@@ -9,31 +9,22 @@ import { Eye } from 'lucide-react';
 import { IMeta, TPayments } from '@/types';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { getLandlordPayments, validatePayment } from '@/services/Payment';
+import { validatePayment } from '@/services/Payment';
 import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
 
-const ManageLandlordPayments = ({ page }: { page: string }) => {
+const ManageLandlordPayments = ({
+  payments,
+  meta,
+  page,
+}: {
+  payments: TPayments[];
+  meta: IMeta;
+  page: string;
+}) => {
   const router = useRouter();
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
   // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
-  const [payments, setPayments] = useState<TPayments[]>([]);
-  const [meta, setMeta] = useState<IMeta | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, meta } = await getLandlordPayments(page, '10');
-        setPayments(data);
-        setMeta(meta);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
-  }, [page]);
 
   const handleVerifyPayment = async (tran_id: string) => {
     try {
@@ -159,7 +150,7 @@ const ManageLandlordPayments = ({ page }: { page: string }) => {
         <h1 className="text-xl font-bold">Manage Payments ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={payments || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
     </div>
   );
 };

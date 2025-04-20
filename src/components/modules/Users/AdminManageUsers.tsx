@@ -7,13 +7,21 @@ import Pagination from '@/components/ui/core/Pagination';
 // import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { IMeta, TUser } from '@/types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import moment from 'moment';
-import { changeUserRole, changeUserStatus, getAllUsers } from '@/services/User';
+import { changeUserRole, changeUserStatus } from '@/services/User';
 
-const AdminManageUsers = ({ page }: { page: string }) => {
+const AdminManageUsers = ({
+  users,
+  meta,
+  page,
+}: {
+  users: TUser[];
+  meta: IMeta;
+  page: string;
+}) => {
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
   // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
@@ -23,22 +31,6 @@ const AdminManageUsers = ({ page }: { page: string }) => {
     userId: string;
   } | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const [users, setUsers] = useState<TUser[]>([]);
-  const [meta, setMeta] = useState<IMeta | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, meta } = await getAllUsers(page, '10');
-        setUsers(data);
-        setMeta(meta);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
-  }, [page]);
 
   const handleuUerRoleChange = async (role: string, userId: string) => {
     try {
@@ -191,7 +183,7 @@ const AdminManageUsers = ({ page }: { page: string }) => {
         <h1 className="text-xl font-bold">Manage Users ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={users || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
 
       <DeleteConfirmationModal
         name={selectedItem}

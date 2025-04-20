@@ -11,27 +11,17 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { CreatePaymentDialog } from '../Payments/CreatePaymentDialog';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { getTenantAgreements } from '@/services/Agreement';
 
-const ManageTenantAgreements = ({ page }: { page: string }) => {
+const ManageTenantAgreements = ({
+  agrements,
+  meta,
+  page,
+}: {
+  agrements: TAgreement[];
+  meta: IMeta;
+  page: string;
+}) => {
   const router = useRouter();
-  const [agrements, setAgrements] = useState<TAgreement[]>([]);
-  const [meta, setMeta] = useState<IMeta | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, meta } = await getTenantAgreements(page, '10');
-        setAgrements(data);
-        setMeta(meta);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
-  }, [page]);
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
   // const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
@@ -157,7 +147,7 @@ const ManageTenantAgreements = ({ page }: { page: string }) => {
         <h1 className="text-xl font-bold">Manage Agreements ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={agrements || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
     </div>
   );
 };

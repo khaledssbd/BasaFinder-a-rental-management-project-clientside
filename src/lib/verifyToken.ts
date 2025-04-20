@@ -1,8 +1,8 @@
 'use server';
 
-import { getNewToken } from '@/services/Auth';
+// import { getNewToken } from '@/services/Auth';
 import { jwtDecode } from 'jwt-decode';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export const isTokenExpired = async (token: string): Promise<boolean> => {
   if (!token) return true;
@@ -17,16 +17,28 @@ export const isTokenExpired = async (token: string): Promise<boolean> => {
   }
 };
 
+// export const getValidToken = async (): Promise<string> => {
+//   const cookieStore = await cookies();
+
+//   let token = cookieStore.get('accessToken')!.value;
+
+//   if (!token || (await isTokenExpired(token))) {
+//     const { data } = await getNewToken();
+//     token = data?.accessToken;
+//     (await cookies()).set('accessToken', token);
+//   }
+
+//   return token;
+// };
+
 export const getValidToken = async (): Promise<string> => {
+  const headerList = await headers();
   const cookieStore = await cookies();
 
-  let token = cookieStore.get('accessToken')!.value;
+  // Prefer token from custom header (set by middleware if refreshed)
+  const tokenFromHeader = headerList.get('X-Access-Token');
+  const tokenFromCookie = cookieStore.get('accessToken')?.value;
 
-  if (!token || (await isTokenExpired(token))) {
-    const { data } = await getNewToken();
-    token = data?.accessToken;
-    cookieStore.set('accessToken', token);
-  }
-
-  return token;
+  const token = tokenFromHeader || tokenFromCookie;
+  return token as string;
 };

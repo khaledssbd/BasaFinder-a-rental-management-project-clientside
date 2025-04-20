@@ -1,11 +1,7 @@
 'use client';
 
 import DeleteConfirmationModal from '@/components/ui/core/BFModal/DeleteConfirmationModal';
-import {
-  deleteAgreement,
-  getLandlordAgreements,
-  updateAgreementStatus,
-} from '@/services/Agreement';
+import { deleteAgreement, updateAgreementStatus } from '@/services/Agreement';
 import { BFTable } from '@/components/ui/core/BFTable/index';
 import Pagination from '@/components/ui/core/Pagination';
 // import { Checkbox } from '@/components/ui/checkbox';
@@ -14,13 +10,21 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Edit, Eye, Trash } from 'lucide-react';
 import { IMeta, TAgreement } from '@/types';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'sonner';
 import LandlordContactAddModal from './LandlordContactAddModal';
 import moment from 'moment';
 
-const ManageLandlordAgreements = ({ page }: { page: string }) => {
+const ManageLandlordAgreements = ({
+  agrements,
+  meta,
+  page,
+}: {
+  agrements: TAgreement[];
+  meta: IMeta;
+  page: string;
+}) => {
   const router = useRouter();
   // const searchParams = useSearchParams();
   // const page = searchParams.get('page');
@@ -28,28 +32,17 @@ const ManageLandlordAgreements = ({ page }: { page: string }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const [agrements, setAgrements] = useState<TAgreement[]>([]);
-  const [meta, setMeta] = useState<IMeta | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, meta } = await getLandlordAgreements(page, '10');
-        setAgrements(data);
-        setMeta(meta);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
-  }, [page]);
   const handleOrderStatusChange = async (
     status: string,
-    agreementId: string
+    agreement: TAgreement
   ) => {
+    if (status === 'pending') {
+      toast.error(`You cannot set status from ${agreement.status} to pending!`);
+      return;
+    }
     try {
-      const res = await updateAgreementStatus(status, agreementId);
+      const res = await updateAgreementStatus(status, agreement._id);
       if (res.success) {
         toast.success(res.message);
       } else {
@@ -183,14 +176,18 @@ const ManageLandlordAgreements = ({ page }: { page: string }) => {
         <select
           className="p-2 border rounded-lg focus:outline-green-500"
           required
-          onChange={e =>
-            handleOrderStatusChange(e.target.value, row.original._id)
-          }
+          onChange={e => handleOrderStatusChange(e.target.value, row.original)}
           defaultValue={row.original.status}
         >
-          <option value="pending">Pending</option>
-          <option value="approved">Approved</option>
-          <option value="rejected">Rejected</option>
+          <option hidden value="pending">
+            Pending
+          </option>
+          <option hidden={row.original.status === 'rejected'} value="approved">
+            {row.original.status === 'approved' ? 'Approved' : 'Approve'}
+          </option>
+          <option hidden={row.original.status === 'approved'} value="rejected">
+            {row.original.status === 'rejected' ? 'Rejected' : 'Reject'}
+          </option>
         </select>
       ),
     },
@@ -237,7 +234,7 @@ const ManageLandlordAgreements = ({ page }: { page: string }) => {
         <h1 className="text-xl font-bold">Manage Agreements ({meta?.total})</h1>
       </div>
       <BFTable columns={columns} data={agrements || []} />
-      <Pagination page={Number(page)} totalPage={meta?.totalPage as number} />
+      <Pagination page={Number(page)} totalPage={meta?.totalPage} />
 
       <DeleteConfirmationModal
         name={selectedItem}

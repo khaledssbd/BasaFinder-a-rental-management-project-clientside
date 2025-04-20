@@ -1,4 +1,5 @@
 import ManageAdminAgreements from '@/components/modules/Agreements/ManageAdminAgreements';
+import { getAdminAgreements } from '@/services/Agreement';
 
 const LandlordAgreementsPage = async ({
   searchParams,
@@ -6,10 +7,11 @@ const LandlordAgreementsPage = async ({
   searchParams: Promise<{ page: string }>;
 }) => {
   const { page } = await searchParams;
+  const { data, meta } = await getAdminAgreements(page, '10');
 
   return (
     <div>
-      <ManageAdminAgreements page={page} />
+      <ManageAdminAgreements agrements={data} meta={meta} page={page} />
     </div>
   );
 };
