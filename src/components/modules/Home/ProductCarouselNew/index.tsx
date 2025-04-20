@@ -1,35 +1,55 @@
 'use client';
+
 import { getAllRentals } from '@/services/Rental';
 import { IRental } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const ProductCarouselNew = () => {
   const [rentals, setRentals] = useState<IRental[]>([]);
-  const [activeIndex, setActiveIndex] = useState<number>(rentals.length - 1);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const fetchRentals = async () => {
       const { data } = await getAllRentals();
-      setRentals(data?.slice(5, 10)); // 5 6 7 8 9 taken
+      const slicedRentals = data?.slice(5, 10);
+      setRentals(slicedRentals);
+      setActiveIndex(slicedRentals.length - 1); // Default to last index when data loads
     };
     fetchRentals();
   }, []);
 
-  // Set up the automatic switching every 2 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex: number) =>
+  const startInterval = React.useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
+      setActiveIndex(prevIndex =>
         prevIndex === rentals.length - 1 ? 0 : prevIndex + 1
       );
     }, 2000);
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(interval);
   }, [rentals.length]);
 
-  // Get the active product's details
+  useEffect(() => {
+    if (rentals.length > 0) {
+      startInterval();
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [rentals, startInterval]);
+
+  const handleProductClick = (index: number) => {
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+      startInterval(); // reset interval
+    }
+  };
+
   const activeProduct: IRental = rentals[activeIndex];
 
   return (
@@ -38,7 +58,8 @@ const ProductCarouselNew = () => {
         {rentals?.map((rental: IRental, index: number) => (
           <div
             key={index}
-            className={`relative flex-1 mx-1 transition-all duration-300 rounded-lg overflow-hidden bg-gray-100 ${
+            onClick={() => handleProductClick(index)}
+            className={`relative flex-1 mx-1 transition-all duration-300 rounded-lg overflow-hidden bg-gray-100 cursor-pointer ${
               activeIndex === index ? 'flex-[2]' : ''
             }`}
           >
@@ -54,7 +75,6 @@ const ProductCarouselNew = () => {
               }`}
             />
 
-            {/* Text over dark image */}
             {activeIndex !== index && (
               <h3 className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white text-center text-sm uppercase z-10">
                 {rental?.location}
