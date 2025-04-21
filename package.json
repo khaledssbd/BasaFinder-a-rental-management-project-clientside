@@ -7,7 +7,7 @@
   },
   "description": "A fast and lightweight rental management platform built with MongoDB, NodeJS, ExpressJS and NextJS.",
   "keywords": [
-    "rental",
+    "rentals",
     "nextjs",
     "typescript",
     "mongoose",
