@@ -7,7 +7,7 @@ const Footer = () => {
     { href: '/rentals', label: 'Rentals' },
     { href: '/about-us', label: 'About Us' },
     { href: '/faq', label: 'FAQ' },
-    { href: '/terms-and-conditions', label: 'Terms & Conditions' },
+    { href: '/terms-and-conditions', label: 'Terms' },
     { href: '/privacy-policy', label: 'Privacy Policy' },
     { href: '/news', label: 'News' },
   ];
@@ -31,7 +31,7 @@ const Footer = () => {
               </h1>
             </Link>
           </div>
-          <p className="text-gray-600 mt-3 w-1/2 text-xs leading-6">
+          <p className="text-gray-600 mt-3 md:w-1/2 text-xs leading-6">
             Find your perfect home with BasaFinder! 🏡 Discover the best rental
             deals this season—affordable, hassle-free, and tailored to your
             needs. Don’t miss out—limited listings available!
@@ -41,7 +41,7 @@ const Footer = () => {
         <hr />
         {/* nav Links */}
         <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 text-sm text-gray-800 font-medium my-4">
-          {navLinks.map(link => (
+          {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
@@ -54,7 +54,7 @@ const Footer = () => {
         </ul>
 
         {/* social Links */}
-        <div className="flex justify-center space-x-4">
+        {/* <div className="flex justify-center space-x-4">
           {socialLinks.map(({ href, icon: Icon }, index) => (
             <Link
               href={href}
@@ -64,6 +64,20 @@ const Footer = () => {
               className="text-gray-600 hover:text-purple-600"
             >
               <Icon className="w-5 h-5" />
+            </Link>
+          ))}
+        </div> */}
+
+        <div className="flex justify-center space-x-4 mt-6">
+          {socialLinks.map(({ href, icon: Icon }, index) => (
+            <Link
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              key={index}
+              className="group inline-flex items-center justify-center w-10 h-10 rounded-full bg-neutral-800 transition-all duration-300 transform hover:scale-150 hover:bg-white cursor-pointer"
+            >
+              <Icon className="w-5 h-5 text-gray-300 group-hover:text-black transition-colors duration-300" />
             </Link>
           ))}
         </div>
