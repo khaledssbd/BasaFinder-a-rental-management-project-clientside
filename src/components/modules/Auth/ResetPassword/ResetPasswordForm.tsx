@@ -155,6 +155,7 @@ const ResetPasswordForm = ({
                       className="text-black dark:text-white"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Your password..."
+                      autoComplete="new-password"
                       {...field}
                       value={field.value || ''}
                     />
