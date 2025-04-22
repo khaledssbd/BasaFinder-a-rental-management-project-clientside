@@ -25,7 +25,11 @@ import {
 } from '@/components/ui/form';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
-export default function LoginForm({ redirectPath }: { redirectPath: string  | undefined }) {
+export default function LoginForm({
+  redirectPath,
+}: {
+  redirectPath: string | undefined;
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -55,7 +59,7 @@ export default function LoginForm({ redirectPath }: { redirectPath: string  | un
     }
   };
 
-  const handleLogin: SubmitHandler<FieldValues> = async data => {
+  const handleLogin: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await loginUser(data);
       if (res?.success) {
@@ -97,6 +101,7 @@ export default function LoginForm({ redirectPath }: { redirectPath: string  | un
                   <Input
                     type="email"
                     placeholder="Email..."
+                    autoComplete="email"
                     {...field}
                     value={field.value || ''}
                   />
@@ -118,6 +123,7 @@ export default function LoginForm({ redirectPath }: { redirectPath: string  | un
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Password..."
+                      autoComplete="current-password"
                       {...field}
                       value={field.value || ''}
                     />

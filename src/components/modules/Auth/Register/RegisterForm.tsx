@@ -46,7 +46,7 @@ export default function RegisterForm() {
   const passwordConfirm = form.watch('passwordConfirm');
   const router = useRouter();
 
-  const handleRegister: SubmitHandler<FieldValues> = async data => {
+  const handleRegister: SubmitHandler<FieldValues> = async (data) => {
     if (!isChecked) {
       return;
     }
@@ -146,7 +146,7 @@ export default function RegisterForm() {
                     className="bg-gray-300 text-black dark:text-amber-500 font-medium"
                     type="file"
                     accept="image/*"
-                    onChange={e => {
+                    onChange={(e) => {
                       field.onChange(e.target.files?.[0]);
                     }}
                   />
@@ -167,6 +167,7 @@ export default function RegisterForm() {
                   <Input
                     type="email"
                     placeholder="Email..."
+                    autoComplete="email"
                     {...field}
                     value={field.value || ''}
                   />
@@ -188,6 +189,7 @@ export default function RegisterForm() {
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Password..."
+                      autoComplete="new-password"
                       {...field}
                       value={field.value || ''}
                     />
@@ -216,6 +218,7 @@ export default function RegisterForm() {
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Confirm Password..."
+                      autoComplete="new-password"
                       {...field}
                       value={field.value || ''}
                     />
@@ -241,7 +244,7 @@ export default function RegisterForm() {
             <div className="text-left pl-1 mt-2">
               <input
                 className="mr-1"
-                onChange={event => setIsChecked(event.target.checked)}
+                onChange={(event) => setIsChecked(event.target.checked)}
                 type="checkbox"
               />
               <small className="text-sm mt-1">

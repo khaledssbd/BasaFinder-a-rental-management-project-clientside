@@ -34,7 +34,7 @@ const UpdateProfileForm = () => {
 
   const router = useRouter();
 
-  const handleUpdate: SubmitHandler<FieldValues> = async data => {
+  const handleUpdate: SubmitHandler<FieldValues> = async (data) => {
     try {
       const { image, ...userData } = data;
 
@@ -66,7 +66,7 @@ const UpdateProfileForm = () => {
 
       <Form {...form}>
         <form
-          className="space-y-5 flex flex-col justify-center items-center w-2/3 md:w-1/2"
+          className="space-y-5 flex flex-col justify-center items-center w-full md:w-1/2"
           onSubmit={form.handleSubmit(handleUpdate)}
         >
           {/* FormField for name */}
@@ -124,7 +124,7 @@ const UpdateProfileForm = () => {
                     className="bg-gray-300 text-black dark:text-amber-500 font-medium"
                     type="file"
                     accept="image/*"
-                    onChange={e => {
+                    onChange={(e) => {
                       field.onChange(e.target.files?.[0]);
                     }}
                   />

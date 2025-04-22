@@ -32,7 +32,7 @@ const ChangePasswordForm = () => {
   const { isLoading, setIsLoading } = useUser();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleUpdate: SubmitHandler<FieldValues> = async data => {
+  const handleUpdate: SubmitHandler<FieldValues> = async (data) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...userData } = data;
@@ -60,7 +60,7 @@ const ChangePasswordForm = () => {
 
       <Form {...form}>
         <form
-          className="space-y-5 flex flex-col justify-center items-center w-2/3 md:w-1/2"
+          className="space-y-5 flex flex-col justify-center items-center w-full md:w-1/2"
           onSubmit={form.handleSubmit(handleUpdate)}
         >
           {/* FormField for oldPassword */}
@@ -81,25 +81,25 @@ const ChangePasswordForm = () => {
                 message: "Can't exceed 20 characters!",
               },
               validate: {
-                isCapital: value => {
+                isCapital: (value) => {
                   if (/(?=.*[A-Z])/.test(value)) {
                     return true;
                   }
                   return 'Must have at least one Uppercase letter!';
                 },
-                isLower: value => {
+                isLower: (value) => {
                   if (/(?=.*[a-z])/.test(value)) {
                     return true;
                   }
                   return 'Must have at least one lowercase letter!';
                 },
-                isNumeric: value => {
+                isNumeric: (value) => {
                   if (/(?=.*\d{2,})/.test(value)) {
                     return true;
                   }
                   return 'Must have at least 2 numbers!';
                 },
-                isSpecialChar: value => {
+                isSpecialChar: (value) => {
                   if (
                     /(?=.*[!@#$%^&*()_+\-~=[\]{};'`:"\\|,.<>/?])/.test(value)
                   ) {
@@ -120,6 +120,7 @@ const ChangePasswordForm = () => {
                       className="text-black dark:text-white"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Old Password..."
+                      autoComplete="current-password"
                       {...field}
                       value={field.value || ''}
                     />
@@ -158,25 +159,25 @@ const ChangePasswordForm = () => {
                 message: "Can't exceed 20 characters!",
               },
               validate: {
-                isCapital: value => {
+                isCapital: (value) => {
                   if (/(?=.*[A-Z])/.test(value)) {
                     return true;
                   }
                   return 'Must have at least one Uppercase letter!';
                 },
-                isLower: value => {
+                isLower: (value) => {
                   if (/(?=.*[a-z])/.test(value)) {
                     return true;
                   }
                   return 'Must have at least one lowercase letter!';
                 },
-                isNumeric: value => {
+                isNumeric: (value) => {
                   if (/(?=.*\d{2,})/.test(value)) {
                     return true;
                   }
                   return 'Must have at least 2 numbers!';
                 },
-                isSpecialChar: value => {
+                isSpecialChar: (value) => {
                   if (
                     /(?=.*[!@#$%^&*()_+\-~=[\]{};'`:"\\|,.<>/?])/.test(value)
                   ) {
@@ -184,7 +185,7 @@ const ChangePasswordForm = () => {
                   }
                   return 'Must contain a symbol!';
                 },
-                isNewPasswordUnique: value => {
+                isNewPasswordUnique: (value) => {
                   if (value !== oldPassword) {
                     return true;
                   }
@@ -203,6 +204,7 @@ const ChangePasswordForm = () => {
                       className="text-black dark:text-white"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="New Password..."
+                      autoComplete="new-password"
                       {...field}
                       value={field.value || ''}
                     />
@@ -233,7 +235,7 @@ const ChangePasswordForm = () => {
                 message: 'You must write your confirm password!',
               },
               validate: {
-                matchesNewPassword: value => {
+                matchesNewPassword: (value) => {
                   if (value === newPassword) {
                     return true;
                   }
@@ -252,6 +254,7 @@ const ChangePasswordForm = () => {
                       className="text-black dark:text-white"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Confirm Password..."
+                      autoComplete="new-password"
                       {...field}
                       value={field.value || ''}
                     />
