@@ -71,7 +71,8 @@ export const middleware = async (request: NextRequest) => {
   // role-based path checking
   if (userInfo?.role && roleBasedPrivateRoutes[userInfo?.role as Role]) {
     const routes = roleBasedPrivateRoutes[userInfo?.role as Role];
-    if (routes.some(route => pathname.match(route))) {
+    // if (routes.some(route => pathname.match(route))) {
+    if (routes.some(route => route.test(pathname))) { // here test is better them match
       return nextResponse; // forwarding to the permitted path
     }
   }
