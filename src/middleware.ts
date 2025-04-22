@@ -47,7 +47,7 @@ export const middleware = async (request: NextRequest) => {
 
     // if refreshToken is valid, get a new accessToken
     try {
-      const { data } = await getNewToken(); // Fetch a new token
+      const { data } = await getNewToken(refreshToken); // Fetch a new token
       const newToken = data?.accessToken;
       if (newToken) {
         // setting newToken as accessToken

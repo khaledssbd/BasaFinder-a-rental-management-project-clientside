@@ -149,7 +149,7 @@ export const logOut = async (): Promise<void> => {
 };
 
 // get New Token by refreshToken
-export const getNewToken = async (): Promise<any> => {
+export const getNewToken = async (refreshToken: string): Promise<any> => {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,
@@ -157,7 +157,8 @@ export const getNewToken = async (): Promise<any> => {
         method: 'POST',
         headers: {
           // 'Content-Type': 'application/json',
-          Authorization: (await cookies()).get('refreshToken')!.value,
+          // Authorization: (await cookies()).get('refreshToken')!.value,
+          Authorization: refreshToken,
         },
       }
     );
