@@ -28,7 +28,7 @@ const Profile = () => {
           />
           <Tooltip id="userName" />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 px-5">
           <h4 className="text-base font-medium text-left">
             Name:
             <span className="ml-2">
