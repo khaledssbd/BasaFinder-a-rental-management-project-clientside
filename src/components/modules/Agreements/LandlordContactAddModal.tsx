@@ -36,6 +36,8 @@ const LandlordContactAddModal = ({ agreementId }: { agreementId: string }) => {
       form.reset();
       setOpen(false);
       toast.success(res?.message);
+    } else {
+      toast.error(res.message);
     }
   };
 

@@ -37,6 +37,8 @@ const ForgotPasswordModal = () => {
       form.reset();
       setOpen(false);
       toast.success(`${res?.message} Check mail...`);
+    } else {
+      toast.error(res.message);
     }
   };
 

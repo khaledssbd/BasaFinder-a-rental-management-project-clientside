@@ -44,6 +44,8 @@ const ResetPasswordForm = ({
       form.reset();
       toast.success(`${res?.message}... Login Now!`);
       router.push('/login');
+    } else {
+      toast.error(res.message);
     }
   };
 
