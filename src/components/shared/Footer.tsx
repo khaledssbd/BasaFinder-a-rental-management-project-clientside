@@ -75,9 +75,9 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               key={index}
-              className="group inline-flex items-center justify-center w-10 h-10 rounded-full bg-neutral-800 transition-all duration-300 transform hover:scale-150 hover:bg-white cursor-pointer"
+              className="group inline-flex items-center justify-center w-10 h-10 rounded-full bg-neutral-800 transition-all duration-300 ease-in-out transform hover:bg-white hover:scale-150 hover:border hover:border-white cursor-pointer"
             >
-              <Icon className="w-5 h-5 text-gray-300 group-hover:text-black transition-colors duration-300" />
+              <Icon className="w-5 h-5 text-gray-300 group-hover:text-black transition-colors duration-300 ease-in-out" />
             </Link>
           ))}
         </div>
