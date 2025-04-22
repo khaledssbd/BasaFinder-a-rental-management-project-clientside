@@ -18,6 +18,7 @@ export const middleware = async (request: NextRequest) => {
 
   const userInfo = await getCurrentUser(); // getting user-information
   const nextResponse = NextResponse.next(); // making default response
+  const redirectToLogin = NextResponse.redirect(new URL('/login', request.url)); // redirectToLogin
 
   // if no user-information
   if (!userInfo) {
@@ -37,10 +38,10 @@ export const middleware = async (request: NextRequest) => {
     if (!refreshToken || (await isTokenExpired(refreshToken))) {
       try {
         await logOut();
-        return NextResponse.redirect(new URL('/login', request.url));
+        return redirectToLogin;
       } catch (error) {
         console.error('Logout failed:', error);
-        return NextResponse.redirect(new URL('/login', request.url));
+        return redirectToLogin;
       }
     }
 
@@ -58,12 +59,12 @@ export const middleware = async (request: NextRequest) => {
         nextResponse.headers.set('X-Access-Token', newToken); // to give other functions immediate access to the new token
       } else {
         await logOut();
-        return NextResponse.redirect(new URL('/login', request.url));
+        return redirectToLogin;
       }
     } catch (error) {
       console.error('Token refresh failed:', error);
       await logOut();
-      return NextResponse.redirect(new URL('/login', request.url));
+      return redirectToLogin;
     }
   }
 
