@@ -1,18 +1,11 @@
-export default function OfflineImage({ className }: { className?: string }) {
+export default function OfflineImage() {
   return (
     <svg
-      className={className}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 192 195"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       focusable="false"
       aria-hidden="true"
-      style={{
-        pointerEvents: 'none',
-        display: 'inherit',
-        width: '80%',
-        height: '80%',
-      }}
     >
       <defs>
         <path id="a_yt15" d="M0 194.555V.675h191.961v193.88z"></path>
