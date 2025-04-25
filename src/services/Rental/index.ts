@@ -71,6 +71,7 @@ export const getSingleRental = async (rentalId: string): Promise<any> => {
       {
         next: {
           tags: ['RENTAL'],
+          revalidate: 1800, // Revalidate this page every 3600 seconds // this is not needed if I use export const revalidate: 3600; inside the rental page
         },
       }
     );

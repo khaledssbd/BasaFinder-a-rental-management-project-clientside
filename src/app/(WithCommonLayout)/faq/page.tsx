@@ -5,6 +5,10 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import BFContainer from '@/components/ui/core/BFContainer';
+import { faqPageMetadata } from '@/contants';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = faqPageMetadata;
 
 const FaqPage = () => {
   return (

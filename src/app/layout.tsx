@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from 'sonner';
 import Providers from '@/providers';
 import OfflineProvides from '@/providers/offline';
+import { mainLayoutMetadata } from '@/contants';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -15,10 +16,10 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'BasaFinder',
-  description:
-    'BasaFinder, a full-stack web application designed to simplify the rental housing experience for both landlords and tenants. The platform connects property owners, renters, and an admin, ensuring a seamless and transparent rental process.',
+export const metadata: Metadata = mainLayoutMetadata;
+
+export const viewport = {
+  themeColor: '#0ea5e9', // for Address bar // Tailwind sky-500
 };
 
 export default function RootLayout({

@@ -65,7 +65,7 @@ const Navbar = () => {
 
   return (
     // <header className="sticky top-0 z-10 w-full border-b bg-transparent/80 backdrop-blur">
-    <header className="sticky top-0 z-10 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-20 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto h-16 px-5 md:px-10">
         <div className="relative h-16 md:h-20">
           {/* <!-- Menu & Small Device for Small Device--> */}

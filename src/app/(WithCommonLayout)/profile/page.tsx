@@ -1,4 +1,6 @@
 import Profile from '@/components/modules/Profile';
+import { profilePageMetadata } from '@/contants';
+import { Metadata } from 'next';
 
 const ProfilePage = () => {
   return (
@@ -9,3 +11,5 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
+export const metadata: Metadata = profilePageMetadata;

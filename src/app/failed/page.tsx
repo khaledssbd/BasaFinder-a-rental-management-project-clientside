@@ -1,6 +1,10 @@
 import { Button } from '@/components/ui/button';
+import { failedPageMetadata } from '@/contants';
 import { AlertTriangle } from 'lucide-react';
+import { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = failedPageMetadata;
 
 const FailedPage = () => {
   return (

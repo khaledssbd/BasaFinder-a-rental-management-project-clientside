@@ -1,7 +1,11 @@
 import PaymentAfter from '@/components/modules/PaymentAfter';
+import { validationPageMetadata } from '@/contants';
 import { validatePayment } from '@/services/Payment';
+import { Metadata } from 'next';
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export const metadata: Metadata = validationPageMetadata;
 
 const ValidationPage = async ({
   searchParams,

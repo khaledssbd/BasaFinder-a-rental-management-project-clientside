@@ -1,5 +1,9 @@
 import BFContainer from '@/components/ui/core/BFContainer';
+import { privacyPolicyPageMetadata } from '@/contants';
+import { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = privacyPolicyPageMetadata;
 
 const PrivacyPolicyPage = () => {
   return (

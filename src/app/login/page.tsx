@@ -1,4 +1,6 @@
 import LoginForm from '@/components/modules/Auth/Login/LoginForm';
+import { loginPageMetadata } from '@/contants';
+import { Metadata } from 'next';
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>;
 
@@ -13,3 +15,5 @@ const LoginPage = async ({ searchParams }: { searchParams: SearchParams }) => {
 };
 
 export default LoginPage;
+
+export const metadata: Metadata = loginPageMetadata;
