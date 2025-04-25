@@ -98,7 +98,7 @@ export async function generateMetadata({
       apple: '/apple-icon.png', // apple browser icon
     },
     openGraph: {
-      title: rental?.location || 'Rental Details - BasaFinder',
+      title: `${rental?.location} | Rental Details - BasaFinder`,
       description:
         rental?.description || 'Explore rental properties on BasaFinder.',
       url: `https://basafinder-clientside.vercel.app/rentals/${rental?._id}`,
@@ -122,7 +122,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: rental?.location || 'Rental Details - BasaFinder',
+      title: `${rental?.location} | Rental Details - BasaFinder`,
       description:
         rental?.description || 'Explore rental properties on BasaFinder.',
       images: rental.images?.length
