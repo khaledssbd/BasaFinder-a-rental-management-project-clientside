@@ -1,4 +1,6 @@
 import AddRentalForm from '@/components/modules/Rentals/AddRental/AddRentalForm';
+import { addRentalPageMetadata } from '@/contants';
+import { Metadata } from 'next';
 
 const AddRentalPage = () => {
   return (
@@ -9,3 +11,6 @@ const AddRentalPage = () => {
 };
 
 export default AddRentalPage;
+
+
+export const metadata: Metadata = addRentalPageMetadata;

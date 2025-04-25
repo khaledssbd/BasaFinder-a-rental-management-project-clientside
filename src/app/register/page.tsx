@@ -1,4 +1,6 @@
 import RegisterForm from '@/components/modules/Auth/Register/RegisterForm';
+import { registerPageMetadata } from '@/contants';
+import { Metadata } from 'next';
 
 const RegisterPage = () => {
   return (
@@ -9,3 +11,5 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+export const metadata: Metadata = registerPageMetadata;

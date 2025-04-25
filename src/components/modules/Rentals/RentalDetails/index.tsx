@@ -30,30 +30,32 @@ const RentalDetails = ({ rental }: { rental: IRental }) => {
       </CardHeader>
 
       {/* CardContent */}
-      <CardContent className="mt-2">
-        <CardTitle className="font-semibold cursor-pointer text-sm">
-          <h1 className="text-lg font-semibold text-gray-800 text-center my-4">
-            Location: {rental?.location}
-          </h1>
-        </CardTitle>
+      <article>
+        <CardContent className="mt-2">
+          <CardTitle className="font-semibold cursor-pointer text-sm">
+            <h1 className="text-lg font-semibold text-gray-800 text-center my-4">
+              Location: {rental?.location}
+            </h1>
+          </CardTitle>
 
-        <div className="my-3 py-3 border-y border-gray-300">
-          <div className="flex items-center justify-between my-2">
-            <p className="text-sm text-gray-600">
-              <span className="font-semibold">৳ {rental?.rent}</span>
-            </p>
+          <div className="my-3 py-3 border-y border-gray-300">
+            <div className="flex items-center justify-between my-2">
+              <p className="text-sm text-gray-600">
+                <span className="font-semibold">৳ {rental?.rent}</span>
+              </p>
 
-            <div className="flex items-center justify-center gap-1">
-              Bedrooms:
-              <span className="text-sm font-medium text-gray-700">
-                {rental?.bedrooms}
-              </span>
+              <div className="flex items-center justify-center gap-1">
+                Bedrooms:
+                <span className="text-sm font-medium text-gray-700">
+                  {rental?.bedrooms}
+                </span>
+              </div>
             </div>
-          </div>
 
-          <p>Description: {rental?.description}</p>
-        </div>
-      </CardContent>
+            <p>Description: {rental?.description}</p>
+          </div>
+        </CardContent>
+      </article>
 
       {/* CardFooter */}
       <CardFooter className="block p-0">

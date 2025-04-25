@@ -1,4 +1,6 @@
 import OfflineImage from '@/assets/svgs/OfflineImage';
+import { offlinePageMetadata } from '@/contants';
+import { Metadata } from 'next';
 
 const OfflinePage = () => {
   return (
@@ -37,3 +39,6 @@ const OfflinePage = () => {
 };
 
 export default OfflinePage;
+
+
+export const metadata: Metadata = offlinePageMetadata;

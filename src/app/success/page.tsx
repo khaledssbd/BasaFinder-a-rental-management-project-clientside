@@ -1,6 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { successPageMetadata } from '@/contants';
+import { Check } from 'lucide-react';
+import { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = successPageMetadata;
 
 const SuccessPage = () => {
   return (

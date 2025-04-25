@@ -2,7 +2,9 @@ import AllRentals from '@/components/modules/Rentals/AllRentals';
 import RentalBanner from '@/components/modules/Rentals/Banner';
 import BFContainer from '@/components/ui/core/BFContainer';
 import Pagination from '@/components/ui/core/Pagination';
+import { rentalsPageMetadata } from '@/contants';
 import { getAllRentals } from '@/services/Rental';
+import { Metadata } from 'next';
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -29,3 +31,5 @@ const AllRentalsPage = async ({
 };
 
 export default AllRentalsPage;
+
+export const metadata: Metadata = rentalsPageMetadata;

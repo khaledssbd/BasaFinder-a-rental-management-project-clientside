@@ -1,4 +1,6 @@
 import ChangePasswordForm from '@/components/modules/Profile/changePasswordForm';
+import { changePasswordPageMetadata } from '@/contants';
+import { Metadata } from 'next';
 
 const ChangePasswordPage = () => {
   return (
@@ -9,3 +11,5 @@ const ChangePasswordPage = () => {
 };
 
 export default ChangePasswordPage;
+
+export const metadata: Metadata = changePasswordPageMetadata;
