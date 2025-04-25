@@ -5,6 +5,7 @@ import BFContainer from '@/components/ui/core/BFContainer';
 import { getAllRentals, getSingleRental } from '@/services/Rental';
 import { IRental } from '@/types';
 import { Metadata } from 'next';
+import Script from 'next/script';
 
 const RentalDetailsPage = async ({
   params,
@@ -50,12 +51,13 @@ const RentalDetailsPage = async ({
 
   return (
     <>
-      {/* for schema markup */}
-      <script
+      {/* for Schema Markup */}
+      <Script
         id='schema-markup'
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
+      
       <BFContainer>
         <RentalBanner
           title="Rental Details"
