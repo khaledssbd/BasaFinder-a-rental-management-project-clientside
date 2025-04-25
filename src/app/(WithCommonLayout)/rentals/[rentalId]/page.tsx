@@ -53,11 +53,12 @@ const RentalDetailsPage = async ({
     <>
       {/* for Schema Markup */}
       <Script
-        id='schema-markup'
+        id="schema-markup"
         type="application/ld+json"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
-      
+
       <BFContainer>
         <RentalBanner
           title="Rental Details"
