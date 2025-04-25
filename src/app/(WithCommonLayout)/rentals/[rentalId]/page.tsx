@@ -18,7 +18,7 @@ const RentalDetailsPage = async ({
 
   if (!rental) return <RentalNotFound />; // return RentalNotFound component
 
-  const jsonLd = {
+  const schemaData = {
     '@context': 'https://schema.org',
     '@type': 'RentalProperty',
     name: rental.location,
@@ -52,8 +52,9 @@ const RentalDetailsPage = async ({
     <>
       {/* for schema markup */}
       <script
+        id='schema-markup'
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
       <BFContainer>
         <RentalBanner
