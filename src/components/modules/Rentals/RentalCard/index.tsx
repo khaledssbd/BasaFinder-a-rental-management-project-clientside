@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import RentalCardCarousel from './RentalCardCarousel';
 import { IRental } from '@/types';
 import Link from 'next/link';
+// import { Link } from 'next-view-transitions';
 import {
   Card,
   CardContent,

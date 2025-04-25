@@ -1,6 +1,7 @@
 import Logo from '@/assets/svgs/Logo';
 import { Facebook, Instagram, X, Linkedin } from 'lucide-react';
 import Link from 'next/link';
+// import { Link } from 'next-view-transitions';
 
 const Footer = () => {
   const navLinks = [
@@ -41,7 +42,7 @@ const Footer = () => {
         <hr />
         {/* nav Links */}
         <ul className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 text-sm text-gray-800 font-medium my-4">
-          {navLinks.map((link) => (
+          {navLinks.map(link => (
             <li key={link.href}>
               <Link
                 href={link.href}
