@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { cancelPageMetadata } from '@/contants';
+import { cancelPageMetadata } from '@/utils/Metadata';
 import { XCircle } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';

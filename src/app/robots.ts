@@ -1,3 +1,4 @@
+import { websiteHomePageURL } from '@/constants';
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
@@ -18,6 +19,6 @@ export default function robots(): MetadataRoute.Robots {
         '/profile/', // disallowed all paths under /profile/
       ],
     },
-    sitemap: 'https://basafinder-clientside.vercel.app/sitemap.xml', // sitemap URL
+    sitemap: `${websiteHomePageURL}/sitemap.xml`, // sitemap URL
   };
 }

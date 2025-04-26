@@ -1,5 +1,5 @@
 import Profile from '@/components/modules/Profile';
-import { profilePageMetadata } from '@/contants';
+import { profilePageMetadata } from '@/utils/Metadata';
 import { Metadata } from 'next';
 
 const ProfilePage = () => {

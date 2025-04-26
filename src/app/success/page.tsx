@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { successPageMetadata } from '@/contants';
+import { successPageMetadata } from '@/utils/Metadata';
 import { Check } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';

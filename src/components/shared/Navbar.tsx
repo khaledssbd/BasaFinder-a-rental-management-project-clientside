@@ -30,7 +30,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { logOut } from '@/services/Auth';
 import { useUser } from '@/context/UserContext';
 import { usePathname, useRouter } from 'next/navigation';
-import { protectedRoutes } from '@/contants';
+import { protectedRoutes } from '@/constants';
 import NavbarLoadingSkeleton from './UserNavSkeleton';
 
 const Navbar = () => {

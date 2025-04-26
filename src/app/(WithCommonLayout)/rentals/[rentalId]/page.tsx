@@ -2,6 +2,8 @@ import RentalBanner from '@/components/modules/Rentals/Banner';
 import RentalDetails from '@/components/modules/Rentals/RentalDetails';
 import RentalNotFound from '@/components/modules/Rentals/RentalNotFound';
 import BFContainer from '@/components/ui/core/BFContainer';
+import { rentalDetailsMetaData } from '@/utils/Metadata';
+import { rentalDetailsPageSchemaData } from '@/utils/SchemaData';
 import { getAllRentals, getSingleRental } from '@/services/Rental';
 import { IRental } from '@/types';
 import { Metadata } from 'next';
@@ -19,44 +21,18 @@ const RentalDetailsPage = async ({
 
   if (!rental) return <RentalNotFound />; // return RentalNotFound component
 
-  const schemaData = {
-    '@context': 'https://schema.org',
-    '@type': 'RentalProperty',
-    name: rental.location,
-    description: rental.description,
-    url: `https://basafinder-clientside.vercel.app/rentals/${rental._id}`,
-    image: rental.images[0], // Assuming first image is the main image
-    datePublished: rental.createdAt,
-    dateModified: rental.updatedAt,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: rental.location, // Assuming location is the full address for now
-    },
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'BDT', // Currency code for Bangladeshi Taka
-      price: rental.rent,
-      priceValidUntil: rental.updatedAt, // Update price validity if needed
-      url: `https://basafinder-clientside.vercel.app/rentals/${rental._id}`,
-    },
-    numberOfRooms: rental.bedrooms,
-    additionalType: 'https://schema.org/ApartmentComplex', // You can change this if it's a different property type
-    author: {
-      '@type': 'Person',
-      name: rental.landlord?.name || 'Unknown Landlord', // Assuming the landlord object has a name property
-    },
-    isRented: rental.isRented,
-    isDeleted: rental.isDeleted,
-  };
+  const rentalDetailsSchemaData = rentalDetailsPageSchemaData(rental, rentalId);
 
   return (
     <>
       {/* for Schema Markup */}
       <Script
-        id="schema-markup"
+        id={`schema-markup-${rental._id}`}
         type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        // strategy="afterInteractive" not using is better for nextjs seo
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(rentalDetailsSchemaData),
+        }}
       />
 
       <BFContainer>
@@ -84,69 +60,7 @@ export async function generateMetadata({
 
   if (!rental) return { title: 'Rental Not Found' }; // return empty object
 
-  const metaData = {
-    title: rental?.location || 'Rental Details',
-    // title: {
-    //   absolute: rental?.location || 'Rental Details', // it will remove the default title given in main layout.js file
-    // },
-    description:
-      rental?.description || 'Explore rental properties on BasaFinder.',
-    keywords:
-      rental?.description.split(' ') ||
-      'BasaFinder, rental, rentals, tenant, tenants, landlord, landlords', // must use separate Array field on DB for keywords
-    icons: {
-      icon: [
-        { url: '/favicon.ico', type: 'image/x-icon' }, // latest browser favicon
-        { url: '/icon.png', type: 'image/png' }, // all browser icon
-      ],
-      apple: '/apple-icon.png', // apple browser icon
-    },
-    openGraph: {
-      title: `${rental?.location} | Rental Details - BasaFinder`,
-      description:
-        rental?.description || 'Explore rental properties on BasaFinder.',
-      url: `https://basafinder-clientside.vercel.app/rentals/${rental?._id}`,
-      siteName: 'BasaFinder',
-      images: rental.images?.length
-        ? rental.images.map(image => ({
-            url: image,
-            width: 1200,
-            height: 630,
-            alt: 'BasaFinder Rental Preview Image',
-          }))
-        : [
-            {
-              url: '/default-rental-image.jpg',
-              width: 1200,
-              height: 630,
-              alt: 'BasaFinder Default Image',
-            },
-          ],
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${rental?.location} | Rental Details - BasaFinder`,
-      description:
-        rental?.description || 'Explore rental properties on BasaFinder.',
-      images: rental.images?.length
-        ? rental.images.map(image => ({
-            url: image,
-            width: 1200,
-            height: 630,
-            alt: 'BasaFinder Rental Preview Image',
-          }))
-        : [
-            {
-              url: '/default-rental-image.jpg',
-              width: 1200,
-              height: 630,
-              alt: 'BasaFinder Default Image',
-            },
-          ],
-    },
-  };
-
+  const metaData = rentalDetailsMetaData(rental);
   return metaData;
 }
 

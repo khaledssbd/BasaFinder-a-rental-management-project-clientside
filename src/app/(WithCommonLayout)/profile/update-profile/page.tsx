@@ -1,5 +1,5 @@
 import UpdateProfileForm from '@/components/modules/Profile/updateProfileForm';
-import { updateProfilePageMetadata } from '@/contants';
+import { updateProfilePageMetadata } from '@/utils/Metadata';
 import { Metadata } from 'next';
 
 const UpdateProfilePage = () => {

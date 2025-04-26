@@ -1,5 +1,5 @@
 import ChangePasswordForm from '@/components/modules/Profile/changePasswordForm';
-import { changePasswordPageMetadata } from '@/contants';
+import { changePasswordPageMetadata } from '@/utils/Metadata';
 import { Metadata } from 'next';
 
 const ChangePasswordPage = () => {

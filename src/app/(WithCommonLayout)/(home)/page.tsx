@@ -7,10 +7,22 @@ import BasaFinderParallax from '@/components/modules/Home/BasaFinderParallax';
 import Testimonials from '@/components/modules/Home/Testimonials';
 import Tips from '@/components/modules/Home/Tips';
 import ProductCarouselNew from '@/components/modules/Home/ProductCarouselNew';
+import Script from 'next/script';
+import { homePageSchemaData } from '@/utils/SchemaData';
+import { homePageMetadata } from '@/utils/Metadata';
+import { Metadata } from 'next';
 
 const HomePage = async () => {
+  const schemaData = homePageSchemaData;
+
   return (
     <div className="md:mx-20 my-20 space-y-28">
+      <Script
+        id="schema-markup-home"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
       <HeroSection />
       <Banner />
       {/* as this is nextjs I am using const { data: rentals } = await getAllRentals() several time, but nextjs will call it totally once and share the result to all */}
@@ -29,3 +41,5 @@ const HomePage = async () => {
 };
 
 export default HomePage;
+
+export const metadata: Metadata = homePageMetadata;

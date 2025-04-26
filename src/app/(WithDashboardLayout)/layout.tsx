@@ -6,7 +6,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { dashboardLayoutAllPageMetadata } from '@/contants';
+import { dashboardLayoutAllPageMetadata } from '@/utils/Metadata';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = dashboardLayoutAllPageMetadata;

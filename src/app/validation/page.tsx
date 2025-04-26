@@ -1,5 +1,5 @@
 import PaymentAfter from '@/components/modules/PaymentAfter';
-import { validationPageMetadata } from '@/contants';
+import { validationPageMetadata } from '@/utils/Metadata';
 import { validatePayment } from '@/services/Payment';
 import { Metadata } from 'next';
 

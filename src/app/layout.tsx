@@ -4,7 +4,7 @@ import './globals.css';
 import { Toaster } from 'sonner';
 import Providers from '@/providers';
 import OfflineProvides from '@/providers/offline';
-import { mainLayoutMetadata } from '@/contants';
+import { mainLayoutMetadata } from '@/utils/Metadata';
 // import { ViewTransitions } from 'next-view-transitions';
 
 const geistSans = Geist({
@@ -29,6 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // <ViewTransitions>
     <html lang="en">
       <body
         className={`${geistSans.className} ${geistMono.variable} antialiased`}
@@ -40,5 +41,6 @@ export default function RootLayout({
         <OfflineProvides />
       </body>
     </html>
+    // </ViewTransitions>
   );
 }

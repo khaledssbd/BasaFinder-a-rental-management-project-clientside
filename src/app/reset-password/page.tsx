@@ -1,5 +1,5 @@
 import ResetPasswordForm from '@/components/modules/Auth/ResetPassword/ResetPasswordForm';
-import { resetPasswordPageMetadata } from '@/contants';
+import { resetPasswordPageMetadata } from '@/utils/Metadata';
 import { Metadata } from 'next';
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
