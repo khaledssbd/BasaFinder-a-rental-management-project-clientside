@@ -29,7 +29,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <ViewTransitions>
     <html lang="en">
       <body
         className={`${geistSans.className} ${geistMono.variable} antialiased`}
@@ -41,6 +40,5 @@ export default function RootLayout({
         <OfflineProvides />
       </body>
     </html>
-    // </ViewTransitions>
   );
 }

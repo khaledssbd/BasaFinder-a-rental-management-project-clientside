@@ -40,6 +40,11 @@ const Navbar = () => {
 
   const navItems = [
     {
+      name: 'Home',
+      link: '/',
+    },
+
+    {
       name: 'Rentals',
       link: '/rentals',
     },
