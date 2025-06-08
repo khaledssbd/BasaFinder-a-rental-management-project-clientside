@@ -1,30 +1,31 @@
 const CACHE_NAME = 'basa_finder_cache_v1';
-const urlCached = ['/offline'];
+const OFFLINE_URL = '/offline';
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches
-      .open(CACHE_NAME)
-      .then(cache => {
-        console.log('Caching files.....');
-        return cache.addAll(urlCached);
-      })
-      .then(() => {
-        console.log('All files cached.');
-        self.skipWaiting();
-      })
-      .catch(error => {
-        console.log('Error caching files:', error);
-      })
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      // Cache the offline page and its dependencies
+      await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }));
+    })()
   );
 });
 
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(urlCached[0]);
-    })
-  );
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(OFFLINE_URL);
+        return cachedResponse || new Response('Offline', { status: 503 });
+      })
+    );
+  } else {
+    // For non-navigation requests, try network first
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(event.request))
+    );
+  }
 });
 
 self.addEventListener('activate', event => {
@@ -33,7 +34,6 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('Deleting cache: ' + cacheName);
             return caches.delete(cacheName);
           }
         })
